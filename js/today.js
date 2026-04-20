@@ -1,6 +1,14 @@
 // ── TODAY PAGE ──
-function renderToday(targetDate) {
+async function renderToday(targetDate) {
   const date = targetDate || AppState.date;
+  
+  // Apply time input if on today page
+  const timeInput = document.getElementById('time-today');
+  if (timeInput && timeInput.value) {
+    const [hours, minutes] = timeInput.value.split(':').map(Number);
+    date.setHours(hours, minutes, 0, 0);
+  }
+  
   const jd = Panchang.julianDate(date);
   const sunL = Panchang.sunLongitude(jd);
   const moonL = Panchang.moonLongitude(jd);
@@ -22,7 +30,7 @@ function renderToday(targetDate) {
   const sunDeg     = Panchang.getDegInSign(sunL);
   const moonDeg    = Panchang.getDegInSign(moonL);
 
-  const ss = Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
+  const ss = await Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
   let sunriseStr = '—', sunsetStr = '—';
   let rahuStr = '—', gulikaStr = '—', yamaStr = '—';
 

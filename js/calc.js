@@ -139,7 +139,27 @@ function getDegInSign(lon) {
   return `${Math.floor(d)}° ${String(Math.floor((d%1)*60)).padStart(2,'0')}'`;
 }
 
-function getSunriseSet(lat, lon, date) {
+async function getSunriseSet(lat, lon, date) {
+  try {
+    // Use SunCalc library for accurate sunrise/sunset
+    // SunCalc.getTimes returns times in local timezone automatically
+    const times = SunCalc.getTimes(date, lat, lon);
+    
+    if (times.sunrise && times.sunset) {
+      const sunrise = times.sunrise;
+      const sunset = times.sunset;
+      const duration = (sunset - sunrise) / 60000; // duration in minutes
+      return { sunrise, sunset, duration };
+    }
+    throw new Error('SunCalc did not return sunrise/sunset');
+  } catch (error) {
+    console.warn('SunCalc calculation failed, using fallback:', error);
+    // Fallback to original calculation method
+    return getSunriseSetFallback(lat, lon, date);
+  }
+}
+
+function getSunriseSetFallback(lat, lon, date) {
   const JD=julianDate(new Date(Date.UTC(date.getFullYear(),date.getMonth(),date.getDate(),12)));
   const n=JD-2451545.0, T=n/36525;
   const lw=-lon*Math.PI/180, phi=lat*Math.PI/180;

@@ -1,19 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Outfit:wght@300;400;500&display=swap');
 
 :root {
-  --bg: #0d0b08;
-  --bg2: #141210;
-  --bg3: #1c1a16;
-  --bg4: #242118;
-  --border: rgba(212,180,120,0.12);
-  --border2: rgba(212,180,120,0.25);
-  --gold: #c9a84c;
-  --gold2: #e8c97a;
-  --gold-dim: rgba(201,168,76,0.15);
-  --text: #f0e8d8;
-  --text2: #b8a88a;
-  --text3: #7a6e5a;
-  --red: #c0504a;
+  --bg: #ffffff;
+  --bg2: #f8f8f8;
+  --bg3: #f0f0f0;
+  --bg4: #e8e8e8;
+  --border: rgba(214,64,69,0.12);
+  --border2: rgba(214,64,69,0.25);
+  --gold: #D64045;
+  --gold2: #C1402A;
+  --gold-dim: rgba(214,64,69,0.08);
+  --text: #1a1a1a;
+  --text2: #666666;
+  --text3: #999999;
+  --red: #D64045;
   --green: #5a8a5a;
   --blue: #4a7aaa;
   --font-display: 'Cormorant Garamond', serif;
@@ -47,7 +47,7 @@ body {
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 2rem;
   height: 58px;
-  background: rgba(13,11,8,0.92);
+  background: rgba(255,255,255,0.95);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(12px);
 }
@@ -386,7 +386,7 @@ body {
 .cal-cell .cal-date { font-size: 12px; font-weight: 500; color: var(--text); }
 .cal-cell .cal-tithi { font-size: 10px; color: var(--gold); margin-top: 2px; }
 .cal-cell .cal-naksh { font-size: 9px; color: var(--text3); margin-top: 1px; }
-.cal-cell.purnima { background: rgba(201,168,76,0.08); }
+.cal-cell.purnima { background: rgba(214,64,69,0.08); }
 .cal-cell.amavasya { background: rgba(255,255,255,0.02); }
 
 /* ── MUHURTA ── */

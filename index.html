@@ -6,6 +6,7 @@
   <title>Tropical Panchāng</title>
   <meta name="description" content="Tropical Panchang — Tithi, Nakshatra, Yoga, Karana, Vaar and more using Western (Tropical) zodiac positions. No ayanamsa." />
   <link rel="stylesheet" href="css/style.css" />
+  <script src="https://cdn.jsdelivr.net/npm/suncalc@1.9.0/suncalc.js"></script>
 </head>
 <body>
 
@@ -55,6 +56,12 @@
     <button class="btn-sm" onclick="handleLocSearch('loc-today')">Search</button>
     <button class="btn-sm" onclick="handleAutoLocate()">Auto-detect</button>
     <span class="loc-status" id="loc-today-status"></span>
+  </div>
+
+  <div class="loc-bar">
+    <label>⏰ Time</label>
+    <input type="time" id="time-today" style="padding:5px 10px;border:1px solid var(--border2);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:13px;" onchange="renderToday()" />
+    <button class="btn-sm" onclick="document.getElementById('time-today').value=new Date().toTimeString().slice(0,5);renderToday();">Now</button>
   </div>
 
   <div id="today-container"></div>
@@ -254,7 +261,7 @@
     onDatePick();
   }
 
-  function onDatePick() {
+  async function onDatePick() {
     const val = document.getElementById('date-picker')?.value;
     const date = val ? new Date(val + 'T12:00:00') : new Date();
     const container = document.getElementById('date-container');
@@ -279,7 +286,7 @@
     const moonSign   = Panchang.getTropicalSign(moonL);
     const sunDeg     = Panchang.getDegInSign(sunL);
     const moonDeg    = Panchang.getDegInSign(moonL);
-    const ss = Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
+    const ss = await Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
     let sunriseStr='—', sunsetStr='—', rahuStr='—', gulikaStr='—', yamaStr='—';
     if(ss){
       sunriseStr=Panchang.fmt12(ss.sunrise); sunsetStr=Panchang.fmt12(ss.sunset);

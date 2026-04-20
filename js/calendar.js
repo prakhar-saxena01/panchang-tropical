@@ -98,34 +98,36 @@ function showCalDayDetail(date) {
   const yoga   = Panchang.getYoga(sunL, moonL);
   const karana = Panchang.getKarana(sunL, moonL);
   const vaar   = Panchang.VAAR[date.getDay()];
-  const ss     = Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
   const sunSign  = Panchang.getTropicalSign(sunL);
   const moonSign = Panchang.getTropicalSign(moonL);
 
-  let ssHtml = '';
-  if (ss) {
-    const rahu = Panchang.getKaal(ss.sunrise, ss.sunset, date.getDay(), 'rahu');
-    ssHtml = `
-      <div class="card"><div class="card-label">Sunrise</div><div class="card-value" style="font-size:16px;">${Panchang.fmt12(ss.sunrise)}</div></div>
-      <div class="card"><div class="card-label">Sunset</div><div class="card-value" style="font-size:16px;">${Panchang.fmt12(ss.sunset)}</div></div>
-      <div class="card card-red"><div class="card-label">Rahu Kaal</div><div class="card-value" style="font-size:13px;">${Panchang.fmt12(rahu.start)} – ${Panchang.fmt12(rahu.end)}</div></div>
-    `;
-  }
+  // Handle async sunrise/sunset
+  Panchang.getSunriseSet(AppState.lat, AppState.lon, date).then(ss => {
+    let ssHtml = '';
+    if (ss) {
+      const rahu = Panchang.getKaal(ss.sunrise, ss.sunset, date.getDay(), 'rahu');
+      ssHtml = `
+        <div class="card"><div class="card-label">Sunrise</div><div class="card-value" style="font-size:16px;">${Panchang.fmt12(ss.sunrise)}</div></div>
+        <div class="card"><div class="card-label">Sunset</div><div class="card-value" style="font-size:16px;">${Panchang.fmt12(ss.sunset)}</div></div>
+        <div class="card card-red"><div class="card-label">Rahu Kaal</div><div class="card-value" style="font-size:13px;">${Panchang.fmt12(rahu.start)} – ${Panchang.fmt12(rahu.end)}</div></div>
+      `;
+    }
 
-  detail.innerHTML = `
-    <div style="border:1px solid var(--border2); border-radius:var(--radius-lg); padding:16px 18px; background:var(--bg2);">
-      <div style="font-family:var(--font-display); font-size:20px; margin-bottom:12px; color:var(--gold2);">
-        ${Panchang.VAAR_EN[date.getDay()]}, ${date.getDate()} ${Panchang.MONTHS_EN[date.getMonth()]} ${date.getFullYear()}
+    detail.innerHTML = `
+      <div style="border:1px solid var(--border2); border-radius:var(--radius-lg); padding:16px 18px; background:var(--bg2);">
+        <div style="font-family:var(--font-display); font-size:20px; margin-bottom:12px; color:var(--gold2);">
+          ${Panchang.VAAR_EN[date.getDay()]}, ${date.getDate()} ${Panchang.MONTHS_EN[date.getMonth()]} ${date.getFullYear()}
+        </div>
+        <div class="grid-auto-sm" style="margin-bottom:10px;">
+          <div class="card"><div class="card-label">Tithi</div><div class="card-value" style="font-size:16px;">${tithi.name}</div><div class="card-sub">${tithi.paksha}</div></div>
+          <div class="card"><div class="card-label">Nakshatra</div><div class="card-value" style="font-size:16px;">${naksh.name}</div><div class="card-sub">Pada ${naksh.pada}</div></div>
+          <div class="card"><div class="card-label">Yoga</div><div class="card-value" style="font-size:16px;">${yoga.name}</div></div>
+          <div class="card"><div class="card-label">Karana</div><div class="card-value" style="font-size:16px;">${karana.name}</div></div>
+          <div class="card"><div class="card-label">Sun in</div><div class="card-value" style="font-size:16px;">${sunSign}</div></div>
+          <div class="card"><div class="card-label">Moon in</div><div class="card-value" style="font-size:16px;">${moonSign}</div></div>
+          ${ssHtml}
+        </div>
       </div>
-      <div class="grid-auto-sm" style="margin-bottom:10px;">
-        <div class="card"><div class="card-label">Tithi</div><div class="card-value" style="font-size:16px;">${tithi.name}</div><div class="card-sub">${tithi.paksha}</div></div>
-        <div class="card"><div class="card-label">Nakshatra</div><div class="card-value" style="font-size:16px;">${naksh.name}</div><div class="card-sub">Pada ${naksh.pada}</div></div>
-        <div class="card"><div class="card-label">Yoga</div><div class="card-value" style="font-size:16px;">${yoga.name}</div></div>
-        <div class="card"><div class="card-label">Karana</div><div class="card-value" style="font-size:16px;">${karana.name}</div></div>
-        <div class="card"><div class="card-label">Sun in</div><div class="card-value" style="font-size:16px;">${sunSign}</div></div>
-        <div class="card"><div class="card-label">Moon in</div><div class="card-value" style="font-size:16px;">${moonSign}</div></div>
-        ${ssHtml}
-      </div>
-    </div>
-  `;
+    `;
+  });
 }

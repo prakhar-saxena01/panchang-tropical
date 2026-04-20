@@ -1,10 +1,10 @@
 // ── HORA PAGE ──
-function renderHora(targetDate) {
+async function renderHora(targetDate) {
   const container = document.getElementById('hora-container');
   if (!container) return;
 
   const date = targetDate || new Date();
-  const ss = Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
+  const ss = await Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
   if (!ss) { container.innerHTML = '<div class="content"><p style="color:var(--text3)">Sunrise data unavailable for this location.</p></div>'; return; }
 
   // Build 24 horas starting from midnight
@@ -93,7 +93,7 @@ function renderMuhurta() {
   calcMuhurta();
 }
 
-function calcMuhurta() {
+async function calcMuhurta() {
   const dateVal = document.getElementById('muh-date')?.value;
   const actVal  = document.getElementById('muh-activity')?.value;
   const result  = document.getElementById('muh-result');
@@ -101,7 +101,7 @@ function calcMuhurta() {
 
   const date = new Date(dateVal + 'T12:00:00');
   // Get quality for each hora of the day
-  const ss = Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
+  const ss = await Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
 
   const rows = [];
   for (let h = 0; h < 24; h++) {
@@ -155,12 +155,12 @@ function calcMuhurta() {
 }
 
 // ── DATE LOOKUP PAGE ──
-function renderDateLookup(dateStr) {
+async function renderDateLookup(dateStr) {
   const container = document.getElementById('date-container');
   if (!container) return;
 
   const date = dateStr ? new Date(dateStr + 'T12:00:00') : new Date();
-  renderToday(date);
+  await renderToday(date);
 
   // Swap into date container
   const todayCont = document.getElementById('today-container');
