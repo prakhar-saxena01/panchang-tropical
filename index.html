@@ -26,7 +26,6 @@
     <li><a href="#" onclick="showPage('calendar')"id="nav-calendar">Calendar</a></li>
     <li><a href="#" onclick="showPage('hora')"    id="nav-hora">Hora</a></li>
     <li><a href="#" onclick="showPage('muhurta')" id="nav-muhurta">Muhurta</a></li>
-    <li><a href="#" onclick="showPage('about')"   id="nav-about">About</a></li>
   </ul>
 
   <div class="nav-right">
@@ -157,69 +156,6 @@
   <div id="muhurta-container"></div>
 </div>
 
-<!-- ══════════════════════════════════════
-     PAGE: ABOUT
-══════════════════════════════════════ -->
-<div class="page" id="page-about">
-  <div class="hero">
-    <div class="hero-left">
-      <h1>About <em>This Project</em></h1>
-      <div class="hero-sub">Why Tropical Panchang?</div>
-    </div>
-  </div>
-
-  <div class="content" style="max-width:680px;">
-    <div class="section-head">The Problem</div>
-    <p style="color:var(--text2); line-height:1.8; margin-bottom:1.25rem;">
-      There are thousands of Panchang apps — and almost all of them use <strong style="color:var(--text);font-weight:400;">Sidereal (Nirayana)</strong> zodiac with Lahiri ayanamsa.
-      The sidereal space is completely saturated. When users request Tropical (Sayana) versions, developers often ignore them.
-    </p>
-    <p style="color:var(--text2); line-height:1.8; margin-bottom:1.25rem;">
-      This app takes a different approach: <strong style="color:var(--gold);font-weight:400;">Tropical Panchang</strong> — all positions computed directly from
-      the Sun and Moon's apparent ecliptic longitudes in the tropical zodiac, with no ayanamsa correction applied.
-    </p>
-
-    <div class="section-head">How the Five Limbs are Computed</div>
-    <div class="card" style="margin-bottom:10px;">
-      <div class="card-label">Tithi (lunar day)</div>
-      <div class="card-sub" style="font-size:13px;line-height:1.7;">Moon's tropical longitude minus Sun's tropical longitude, divided into 30 arcs of 12° each. Each arc = one Tithi. 1–15 = Shukla Paksha, 16–30 = Krishna Paksha.</div>
-    </div>
-    <div class="card" style="margin-bottom:10px;">
-      <div class="card-label">Nakshatra (lunar mansion)</div>
-      <div class="card-sub" style="font-size:13px;line-height:1.7;">Moon's tropical longitude divided into 27 equal arcs of 13°20' each. Each arc = one Nakshatra. 4 Padas per Nakshatra (3°20' each).</div>
-    </div>
-    <div class="card" style="margin-bottom:10px;">
-      <div class="card-label">Yoga</div>
-      <div class="card-sub" style="font-size:13px;line-height:1.7;">Sum of Sun's and Moon's tropical longitudes, divided into 27 equal arcs of 13°20'. The resulting arc determines the Yoga.</div>
-    </div>
-    <div class="card" style="margin-bottom:10px;">
-      <div class="card-label">Karana (half-tithi)</div>
-      <div class="card-sub" style="font-size:13px;line-height:1.7;">Each Tithi is divided into two halves (6° arcs). There are 11 Karanas — 4 fixed and 7 movable repeating through the month.</div>
-    </div>
-    <div class="card" style="margin-bottom:1.5rem;">
-      <div class="card-label">Vaar (weekday)</div>
-      <div class="card-sub" style="font-size:13px;line-height:1.7;">The day of the week, each ruled by a planet in the traditional Chaldean order.</div>
-    </div>
-
-    <div class="section-head">Tropical vs Sidereal</div>
-    <p style="color:var(--text2); line-height:1.8; margin-bottom:1rem;">
-      The tropical zodiac measures celestial longitude from the vernal equinox (0° Aries = March equinox). The sidereal zodiac
-      uses a fixed star reference and is currently about 23–24° behind the tropical. Most Indian Panchang software uses sidereal.
-      This app uses tropical — making it the <strong style="color:var(--gold);font-weight:400;">rare option</strong> in the Panchang space.
-    </p>
-
-    <div class="section-head">Accuracy &amp; Sources</div>
-    <p style="color:var(--text2); line-height:1.8; margin-bottom:3rem;">
-      Solar positions use a simplified VSOP87 formula (accurate to ~1 arcminute for daily use). Lunar positions use a simplified ELP2000
-      series (accurate to ~15–20 arcminutes). Sunrise/Sunset uses the standard astronomical algorithm.
-      All calculations run client-side in JavaScript — no server, no data collection.
-    </p>
-
-    <div class="footer">Built with pure HTML, CSS &amp; JavaScript · No tracking · No ayanamsa · Open source</div>
-  </div>
-</div>
-
-
 <!-- ── SCRIPTS ── -->
 <script src="js/calc.js"></script>
 <script src="js/location.js"></script>
@@ -228,7 +164,7 @@
 <script src="js/hora.js"></script>
 <script>
   // ── PAGE ROUTER ──
-  const PAGES = ['today','date','calendar','hora','muhurta','about'];
+  const PAGES = ['today','date','calendar','hora','muhurta'];
 
   function showPage(name) {
     PAGES.forEach(p => {
