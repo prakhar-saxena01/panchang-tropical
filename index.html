@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tropical Panchāng</title>
+  <meta name="description" content="Tropical Panchang — Tithi, Nakshatra, Yoga, Karana, Vaar and more using Western (Tropical) zodiac positions. No ayanamsa." />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+<!-- ── NAVIGATION ── -->
+<nav class="nav">
+  <a class="nav-brand" href="#" onclick="showPage('today')">
+    Tropical Panchāng <span>tropical zodiac</span>
+  </a>
+
+  <button class="nav-toggle" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <ul class="nav-links" id="nav-links">
+    <li><a href="#" onclick="showPage('today')"   id="nav-today"    class="active">Today</a></li>
+    <li><a href="#" onclick="showPage('date')"    id="nav-date">Date Lookup</a></li>
+    <li><a href="#" onclick="showPage('calendar')"id="nav-calendar">Calendar</a></li>
+    <li><a href="#" onclick="showPage('hora')"    id="nav-hora">Hora</a></li>
+    <li><a href="#" onclick="showPage('muhurta')" id="nav-muhurta">Muhurta</a></li>
+    <li><a href="#" onclick="showPage('about')"   id="nav-about">About</a></li>
+  </ul>
+
+  <div class="nav-right">
+    <span class="loc-mini" id="loc-mini">Varanasi, India</span>
+  </div>
+</nav>
+
+<!-- ══════════════════════════════════════
+     PAGE: TODAY
+══════════════════════════════════════ -->
+<div class="page active" id="page-today">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Today's <em>Pañcāṅga</em></h1>
+      <div class="hero-sub">Tropical Zodiac · No Ayanamsa</div>
+    </div>
+    <div>
+      <div class="live-time" id="live-clock">—</div>
+      <div class="live-date" id="live-date">—</div>
+    </div>
+  </div>
+
+  <div class="loc-bar">
+    <label>📍 Location</label>
+    <input class="loc-input" id="loc-today" placeholder="City name or lat,lon" value="Varanasi, India"
+           onkeydown="if(event.key==='Enter') handleLocSearch('loc-today')" />
+    <button class="btn-sm" onclick="handleLocSearch('loc-today')">Search</button>
+    <button class="btn-sm" onclick="handleAutoLocate()">Auto-detect</button>
+    <span class="loc-status" id="loc-today-status"></span>
+  </div>
+
+  <div id="today-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: DATE LOOKUP
+══════════════════════════════════════ -->
+<div class="page" id="page-date">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Date <em>Lookup</em></h1>
+      <div class="hero-sub">Panchang for any date</div>
+    </div>
+  </div>
+
+  <div class="date-pick-bar">
+    <label>📅 Date</label>
+    <input type="date" id="date-picker" />
+    <button class="btn-sm" onclick="onDatePick()">Show Panchang</button>
+    <label style="margin-left:12px;">📍</label>
+    <input class="loc-input" id="loc-date" placeholder="City name or lat,lon" value="Varanasi, India"
+           onkeydown="if(event.key==='Enter') handleLocSearch('loc-date')" style="max-width:220px;" />
+    <button class="btn-sm" onclick="handleLocSearch('loc-date')">Go</button>
+  </div>
+
+  <div id="date-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: CALENDAR
+══════════════════════════════════════ -->
+<div class="page" id="page-calendar">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Monthly <em>Calendar</em></h1>
+      <div class="hero-sub">Tithi &amp; Nakshatra for every day</div>
+    </div>
+  </div>
+
+  <div class="loc-bar">
+    <label>📍 Location</label>
+    <input class="loc-input" id="loc-cal" placeholder="City or lat,lon" value="Varanasi, India"
+           onkeydown="if(event.key==='Enter') handleLocSearch('loc-cal')" />
+    <button class="btn-sm" onclick="handleLocSearch('loc-cal')">Search</button>
+    <button class="btn-sm" onclick="handleAutoLocate()">Auto-detect</button>
+  </div>
+
+  <div id="cal-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: HORA
+══════════════════════════════════════ -->
+<div class="page" id="page-hora">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Planetary <em>Hora</em></h1>
+      <div class="hero-sub">Chaldean hour lords · 24-hour table</div>
+    </div>
+  </div>
+
+  <div class="loc-bar">
+    <label>📍 Location</label>
+    <input class="loc-input" id="loc-hora" placeholder="City or lat,lon" value="Varanasi, India"
+           onkeydown="if(event.key==='Enter') handleLocSearch('loc-hora')" />
+    <button class="btn-sm" onclick="handleLocSearch('loc-hora')">Search</button>
+    <button class="btn-sm" onclick="handleAutoLocate()">Auto-detect</button>
+  </div>
+
+  <div id="hora-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: MUHURTA
+══════════════════════════════════════ -->
+<div class="page" id="page-muhurta">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Muhurta <em>Finder</em></h1>
+      <div class="hero-sub">Auspicious time analysis for activities</div>
+    </div>
+  </div>
+
+  <div class="loc-bar">
+    <label>📍 Location</label>
+    <input class="loc-input" id="loc-muh" placeholder="City or lat,lon" value="Varanasi, India"
+           onkeydown="if(event.key==='Enter') handleLocSearch('loc-muh')" />
+    <button class="btn-sm" onclick="handleLocSearch('loc-muh')">Search</button>
+    <button class="btn-sm" onclick="handleAutoLocate()">Auto-detect</button>
+  </div>
+
+  <div id="muhurta-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: ABOUT
+══════════════════════════════════════ -->
+<div class="page" id="page-about">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>About <em>This Project</em></h1>
+      <div class="hero-sub">Why Tropical Panchang?</div>
+    </div>
+  </div>
+
+  <div class="content" style="max-width:680px;">
+    <div class="section-head">The Problem</div>
+    <p style="color:var(--text2); line-height:1.8; margin-bottom:1.25rem;">
+      There are thousands of Panchang apps — and almost all of them use <strong style="color:var(--text);font-weight:400;">Sidereal (Nirayana)</strong> zodiac with Lahiri ayanamsa.
+      The sidereal space is completely saturated. When users request Tropical (Sayana) versions, developers often ignore them.
+    </p>
+    <p style="color:var(--text2); line-height:1.8; margin-bottom:1.25rem;">
+      This app takes a different approach: <strong style="color:var(--gold);font-weight:400;">Tropical Panchang</strong> — all positions computed directly from
+      the Sun and Moon's apparent ecliptic longitudes in the tropical zodiac, with no ayanamsa correction applied.
+    </p>
+
+    <div class="section-head">How the Five Limbs are Computed</div>
+    <div class="card" style="margin-bottom:10px;">
+      <div class="card-label">Tithi (lunar day)</div>
+      <div class="card-sub" style="font-size:13px;line-height:1.7;">Moon's tropical longitude minus Sun's tropical longitude, divided into 30 arcs of 12° each. Each arc = one Tithi. 1–15 = Shukla Paksha, 16–30 = Krishna Paksha.</div>
+    </div>
+    <div class="card" style="margin-bottom:10px;">
+      <div class="card-label">Nakshatra (lunar mansion)</div>
+      <div class="card-sub" style="font-size:13px;line-height:1.7;">Moon's tropical longitude divided into 27 equal arcs of 13°20' each. Each arc = one Nakshatra. 4 Padas per Nakshatra (3°20' each).</div>
+    </div>
+    <div class="card" style="margin-bottom:10px;">
+      <div class="card-label">Yoga</div>
+      <div class="card-sub" style="font-size:13px;line-height:1.7;">Sum of Sun's and Moon's tropical longitudes, divided into 27 equal arcs of 13°20'. The resulting arc determines the Yoga.</div>
+    </div>
+    <div class="card" style="margin-bottom:10px;">
+      <div class="card-label">Karana (half-tithi)</div>
+      <div class="card-sub" style="font-size:13px;line-height:1.7;">Each Tithi is divided into two halves (6° arcs). There are 11 Karanas — 4 fixed and 7 movable repeating through the month.</div>
+    </div>
+    <div class="card" style="margin-bottom:1.5rem;">
+      <div class="card-label">Vaar (weekday)</div>
+      <div class="card-sub" style="font-size:13px;line-height:1.7;">The day of the week, each ruled by a planet in the traditional Chaldean order.</div>
+    </div>
+
+    <div class="section-head">Tropical vs Sidereal</div>
+    <p style="color:var(--text2); line-height:1.8; margin-bottom:1rem;">
+      The tropical zodiac measures celestial longitude from the vernal equinox (0° Aries = March equinox). The sidereal zodiac
+      uses a fixed star reference and is currently about 23–24° behind the tropical. Most Indian Panchang software uses sidereal.
+      This app uses tropical — making it the <strong style="color:var(--gold);font-weight:400;">rare option</strong> in the Panchang space.
+    </p>
+
+    <div class="section-head">Accuracy &amp; Sources</div>
+    <p style="color:var(--text2); line-height:1.8; margin-bottom:3rem;">
+      Solar positions use a simplified VSOP87 formula (accurate to ~1 arcminute for daily use). Lunar positions use a simplified ELP2000
+      series (accurate to ~15–20 arcminutes). Sunrise/Sunset uses the standard astronomical algorithm.
+      All calculations run client-side in JavaScript — no server, no data collection.
+    </p>
+
+    <div class="footer">Built with pure HTML, CSS &amp; JavaScript · No tracking · No ayanamsa · Open source</div>
+  </div>
+</div>
+
+
+<!-- ── SCRIPTS ── -->
+<script src="js/calc.js"></script>
+<script src="js/location.js"></script>
+<script src="js/today.js"></script>
+<script src="js/calendar.js"></script>
+<script src="js/hora.js"></script>
+<script>
+  // ── PAGE ROUTER ──
+  const PAGES = ['today','date','calendar','hora','muhurta','about'];
+
+  function showPage(name) {
+    PAGES.forEach(p => {
+      document.getElementById('page-' + p)?.classList.remove('active');
+      document.getElementById('nav-' + p)?.classList.remove('active');
+    });
+    document.getElementById('page-' + name)?.classList.add('active');
+    document.getElementById('nav-' + name)?.classList.add('active');
+    window.scrollTo(0, 0);
+    closeMenu();
+
+    if (name === 'today')    renderToday();
+    if (name === 'calendar') renderCalendar();
+    if (name === 'hora')     renderHora();
+    if (name === 'muhurta')  renderMuhurta();
+    if (name === 'date')     initDatePage();
+  }
+
+  function toggleMenu() {
+    document.getElementById('nav-links')?.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('nav-links')?.classList.remove('open');
+  }
+
+  // Date lookup page init
+  function initDatePage() {
+    const picker = document.getElementById('date-picker');
+    if (picker && !picker.value) picker.value = new Date().toISOString().split('T')[0];
+    onDatePick();
+  }
+
+  function onDatePick() {
+    const val = document.getElementById('date-picker')?.value;
+    const date = val ? new Date(val + 'T12:00:00') : new Date();
+    const container = document.getElementById('date-container');
+    if (!container) return;
+
+    const jd     = Panchang.julianDate(date);
+    const sunL   = Panchang.sunLongitude(jd);
+    const moonL  = Panchang.moonLongitude(jd);
+    const tithi  = Panchang.getTithi(sunL, moonL);
+    const moonNak= Panchang.getNakshatra(moonL);
+    const sunNak = Panchang.getNakshatra(sunL);
+    const yoga   = Panchang.getYoga(sunL, moonL);
+    const karana = Panchang.getKarana(sunL, moonL);
+    const vaar   = Panchang.VAAR[date.getDay()];
+    const vaarEn = Panchang.VAAR_EN[date.getDay()];
+    const samvat = Panchang.getSamvat(date);
+    const ritu   = Panchang.getRitu(date);
+    const ayana  = Panchang.getAyana(date);
+    const purnimanta = Panchang.getPurnimanta(sunL);
+    const amanta     = Panchang.getAmanta(moonL);
+    const sunSign    = Panchang.getTropicalSign(sunL);
+    const moonSign   = Panchang.getTropicalSign(moonL);
+    const sunDeg     = Panchang.getDegInSign(sunL);
+    const moonDeg    = Panchang.getDegInSign(moonL);
+    const ss = Panchang.getSunriseSet(AppState.lat, AppState.lon, date);
+    let sunriseStr='—', sunsetStr='—', rahuStr='—', gulikaStr='—', yamaStr='—';
+    if(ss){
+      sunriseStr=Panchang.fmt12(ss.sunrise); sunsetStr=Panchang.fmt12(ss.sunset);
+      const rahu=Panchang.getKaal(ss.sunrise,ss.sunset,date.getDay(),'rahu');
+      const gulika=Panchang.getKaal(ss.sunrise,ss.sunset,date.getDay(),'gulika');
+      const yama=Panchang.getKaal(ss.sunrise,ss.sunset,date.getDay(),'yama');
+      rahuStr=`${Panchang.fmt12(rahu.start)} – ${Panchang.fmt12(rahu.end)}`;
+      gulikaStr=`${Panchang.fmt12(gulika.start)} – ${Panchang.fmt12(gulika.end)}`;
+      yamaStr=`${Panchang.fmt12(yama.start)} – ${Panchang.fmt12(yama.end)}`;
+    }
+
+    container.innerHTML = `
+      <div class="pill-strip">
+        <div class="pill highlight"><strong>${samvat.vikram}</strong> Vikram Samvat</div>
+        <div class="pill highlight"><strong>${samvat.shaka}</strong> Shaka Samvat</div>
+        <div class="pill">Purnimanta: <strong>${purnimanta}</strong></div>
+        <div class="pill">Amanta: <strong>${amanta}</strong></div>
+        <div class="pill">Ritu: <strong>${ritu?ritu.name:''}</strong></div>
+        <div class="pill">Ayana: <strong>${ayana}</strong></div>
+      </div>
+      <div class="content">
+        <div style="font-family:var(--font-display);font-size:22px;color:var(--gold2);margin-bottom:1.25rem;">
+          ${vaarEn}, ${date.getDate()} ${Panchang.MONTHS_EN[date.getMonth()]} ${date.getFullYear()}
+        </div>
+        <div class="section-head">Luminaries</div>
+        <div class="grid-2" style="margin-bottom:1.25rem;">
+          <div class="luminary-card sun">
+            <span class="luminary-symbol">☉</span>
+            <div class="luminary-sign">${sunSign}</div>
+            <div class="luminary-deg">${sunDeg} · ${sunL.toFixed(2)}° tropical</div>
+            <div class="luminary-naksh"><strong>${sunNak.name}</strong> Pada ${sunNak.pada} · ${sunNak.lord}</div>
+          </div>
+          <div class="luminary-card moon">
+            <span class="luminary-symbol">☽</span>
+            <div class="luminary-sign">${moonSign}</div>
+            <div class="luminary-deg">${moonDeg} · ${moonL.toFixed(2)}° tropical</div>
+            <div class="luminary-naksh"><strong>${moonNak.name}</strong> Pada ${moonNak.pada} · ${moonNak.lord}</div>
+          </div>
+        </div>
+        <div class="section-head">Pañcāṅga</div>
+        <div class="pancha-grid" style="margin-bottom:1.25rem;">
+          <div class="pancha-item"><div class="pancha-num">I</div><div class="pancha-name">Tithi</div><div class="pancha-value">${tithi.name}</div><div class="pancha-sub">${tithi.paksha}</div></div>
+          <div class="pancha-item"><div class="pancha-num">II</div><div class="pancha-name">Nakshatra</div><div class="pancha-value">${moonNak.name}</div><div class="pancha-sub">Pada ${moonNak.pada}</div></div>
+          <div class="pancha-item"><div class="pancha-num">III</div><div class="pancha-name">Yoga</div><div class="pancha-value" style="color:${yoga.quality==='good'?'#7abf7a':yoga.quality==='bad'?'#e07070':'var(--gold2)'}">${yoga.name}</div><div class="pancha-sub">${yoga.quality}</div></div>
+          <div class="pancha-item"><div class="pancha-num">IV</div><div class="pancha-name">Karana</div><div class="pancha-value" style="color:${karana.quality==='bad'?'#e07070':'var(--gold2)'}">${karana.name}</div></div>
+          <div class="pancha-item"><div class="pancha-num">V</div><div class="pancha-name">Vaar</div><div class="pancha-value" style="font-size:15px;">${vaarEn}</div><div class="pancha-sub">${vaar}</div></div>
+        </div>
+        <div class="section-head">Sunrise &amp; Inauspicious Periods</div>
+        <div class="grid-auto-sm" style="margin-bottom:1.25rem;">
+          <div class="card card-gold"><div class="card-label">Sunrise</div><div class="card-value" style="font-size:16px;">${sunriseStr}</div></div>
+          <div class="card"><div class="card-label">Sunset</div><div class="card-value" style="font-size:16px;">${sunsetStr}</div></div>
+          <div class="card card-red"><div class="card-label">Rahu Kaal</div><div class="card-value" style="font-size:13px;">${rahuStr}</div></div>
+          <div class="card"><div class="card-label">Gulika Kaal</div><div class="card-value" style="font-size:13px;">${gulikaStr}</div></div>
+          <div class="card"><div class="card-label">Yamaghanta</div><div class="card-value" style="font-size:13px;">${yamaStr}</div></div>
+        </div>
+        <div class="zodiac-note">✦ Tropical (Western) Zodiac · No Ayanamsa · ${AppState.locationName}</div>
+      </div>
+    `;
+  }
+
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', () => {
+    startClock();
+    renderToday();
+  });
+</script>
+</body>
+</html>
