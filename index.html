@@ -26,6 +26,11 @@
     <li><a href="#" onclick="showPage('calendar')"id="nav-calendar">Calendar</a></li>
     <li><a href="#" onclick="showPage('hora')"    id="nav-hora">Hora</a></li>
     <li><a href="#" onclick="showPage('muhurta')" id="nav-muhurta">Muhurta</a></li>
+    <li><a href="#" onclick="showPage('kundli')"  id="nav-kundli">Kundli</a></li>
+    <li><a href="#" onclick="showPage('horoscope')" id="nav-horoscope">Horoscope</a></li>
+    <li><a href="#" onclick="showPage('transits')" id="nav-transits">Transits</a></li>
+    <li><a href="#" onclick="showPage('choghadiya')" id="nav-choghadiya">Choghadiya</a></li>
+    <li><a href="#" onclick="showPage('wiki')" id="nav-wiki">Wiki</a></li>
   </ul>
 
   <div class="nav-right">
@@ -156,15 +161,179 @@
   <div id="muhurta-container"></div>
 </div>
 
+<!-- ══════════════════════════════════════
+     PAGE: KUNDLI
+══════════════════════════════════════ -->
+<div class="page" id="page-kundli">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Kundli <em>Maker</em></h1>
+      <div class="hero-sub">Birth chart from name, date, time and place</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div class="kundli-input-form">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:1.25rem;">
+        <div>
+          <label style="display:block;font-size:12px;color:var(--text3);margin-bottom:6px;">Name</label>
+          <input type="text" id="kundli-name" placeholder="Enter name" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);" />
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:var(--text3);margin-bottom:6px;">Date of Birth</label>
+          <input type="date" id="kundli-date" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);" />
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:var(--text3);margin-bottom:6px;">Time of Birth</label>
+          <input type="time" id="kundli-time" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);" />
+        </div>
+        <div>
+          <label style="display:block;font-size:12px;color:var(--text3);margin-bottom:6px;">Place of Birth</label>
+          <input type="text" id="kundli-place" placeholder="City, Country" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);" />
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;">
+        <button class="btn-sm" onclick="generateKundli()">Generate Kundli</button>
+        <button class="btn-sm" onclick="printKundli()" style="background:var(--bg2);border:1px solid var(--border);">🖨️ Print Chart</button>
+      </div>
+    </div>
+
+    <div id="kundli-container" style="margin-top:2rem;"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: HOROSCOPE
+══════════════════════════════════════ -->
+<div class="page" id="page-horoscope">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Horoscope <em>Calculator</em></h1>
+      <div class="hero-sub">Birth chart analysis and predictions</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div style="margin-bottom:1.25rem;display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+      <div>
+        <label style="display:block;font-size:12px;color:var(--text3);margin-bottom:6px;">Zodiac Sign (Sun)</label>
+        <select id="horo-sign" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);" onchange="generateHoroscope()">
+          <option value="">Select Sign</option>
+          <option value="Aries">♈ Aries</option>
+          <option value="Taurus">♉ Taurus</option>
+          <option value="Gemini">♊ Gemini</option>
+          <option value="Cancer">♋ Cancer</option>
+          <option value="Leo">♌ Leo</option>
+          <option value="Virgo">♍ Virgo</option>
+          <option value="Libra">♎ Libra</option>
+          <option value="Scorpio">♏ Scorpio</option>
+          <option value="Sagittarius">♐ Sagittarius</option>
+          <option value="Capricorn">♑ Capricorn</option>
+          <option value="Aquarius">♒ Aquarius</option>
+          <option value="Pisces">♓ Pisces</option>
+        </select>
+      </div>
+      <div>
+        <label style="display:block;font-size:12px;color:var(--text3);margin-bottom:6px;">Date Range</label>
+        <select id="horo-range" style="width:100%;padding:8px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);" onchange="generateHoroscope()">
+          <option value="today">Today</option>
+          <option value="week">This Week</option>
+          <option value="month">This Month</option>
+          <option value="year">This Year</option>
+        </select>
+      </div>
+    </div>
+    <div id="horoscope-container"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: PLANETARY TRANSITS
+══════════════════════════════════════ -->
+<div class="page" id="page-transits">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Planetary <em>Transits</em></h1>
+      <div class="hero-sub">Current planetary positions and aspects</div>
+    </div>
+  </div>
+
+  <div class="loc-bar">
+    <label>📍 Location</label>
+    <input class="loc-input" id="loc-trans" placeholder="City or lat,lon" value="Varanasi, India"
+           onkeydown="if(event.key==='Enter') handleLocSearch('loc-trans')" />
+    <button class="btn-sm" onclick="handleLocSearch('loc-trans')">Search</button>
+    <button class="btn-sm" onclick="handleAutoLocate()">Auto-detect</button>
+  </div>
+
+  <div style="margin-bottom:1.25rem;padding:0 var(--pad);">
+    <label style="font-size:12px;color:var(--text3);margin-right:8px;">Date</label>
+    <input type="date" id="trans-date" style="padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);" onchange="renderTransits()" />
+  </div>
+
+  <div id="transits-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: CHOGHADIYA
+══════════════════════════════════════ -->
+<div class="page" id="page-choghadiya">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Choghadiya <em>Calculator</em></h1>
+      <div class="hero-sub">Auspicious periods (2 hour subdivisions)</div>
+    </div>
+  </div>
+
+  <div class="loc-bar">
+    <label>📍 Location</label>
+    <input class="loc-input" id="loc-chog" placeholder="City or lat,lon" value="Varanasi, India"
+           onkeydown="if(event.key==='Enter') handleLocSearch('loc-chog')" />
+    <button class="btn-sm" onclick="handleLocSearch('loc-chog')">Search</button>
+    <button class="btn-sm" onclick="handleAutoLocate()">Auto-detect</button>
+  </div>
+
+  <div style="margin-bottom:1.25rem;padding:0 var(--pad);">
+    <label style="font-size:12px;color:var(--text3);margin-right:8px;">Date</label>
+    <input type="date" id="chog-date" style="padding:6px 10px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);" onchange="renderChoghadiya()" />
+  </div>
+
+  <div id="choghadiya-container"></div>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: WIKI
+══════════════════════════════════════ -->
+<div class="page" id="page-wiki">
+  <div class="hero">
+    <div class="hero-left">
+      <h1>Vedic Astrology <em>Wiki</em></h1>
+      <div class="hero-sub">Definitions and terminology</div>
+    </div>
+  </div>
+
+  <div class="content">
+    <div style="margin-bottom:1.5rem;">
+      <input type="text" id="wiki-search" placeholder="Search terms..." style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:14px;" onkeyup="filterWikiTerms()" />
+    </div>
+    <div id="wiki-container" style="columns:2;gap:2rem;"></div>
+  </div>
+</div>
+
 <!-- ── SCRIPTS ── -->
 <script src="js/calc.js"></script>
 <script src="js/location.js"></script>
 <script src="js/today.js"></script>
 <script src="js/calendar.js"></script>
 <script src="js/hora.js"></script>
+<script src="js/kundli.js"></script>
+<script src="js/horoscope.js"></script>
+<script src="js/transits.js"></script>
+<script src="js/choghadiya.js"></script>
+<script src="js/wiki.js"></script>
 <script>
   // ── PAGE ROUTER ──
-  const PAGES = ['today','date','calendar','hora','muhurta'];
+  const PAGES = ['today','date','calendar','hora','muhurta','kundli','horoscope','transits','choghadiya','wiki'];
 
   function showPage(name) {
     PAGES.forEach(p => {
@@ -176,11 +345,16 @@
     window.scrollTo(0, 0);
     closeMenu();
 
-    if (name === 'today')    renderToday();
-    if (name === 'calendar') renderCalendar();
-    if (name === 'hora')     renderHora();
-    if (name === 'muhurta')  renderMuhurta();
-    if (name === 'date')     initDatePage();
+    if (name === 'today')       renderToday();
+    if (name === 'calendar')    renderCalendar();
+    if (name === 'hora')        renderHora();
+    if (name === 'muhurta')     renderMuhurta();
+    if (name === 'date')        initDatePage();
+    if (name === 'kundli')      initKundliPage();
+    if (name === 'horoscope')   initHoroscopePage();
+    if (name === 'transits')    renderTransits();
+    if (name === 'choghadiya')  renderChoghadiya();
+    if (name === 'wiki')        initWikiPage();
   }
 
   function toggleMenu() {
