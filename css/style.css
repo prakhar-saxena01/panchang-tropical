@@ -452,6 +452,52 @@ body {
   margin-top: 1.5rem;
 }
 
+/* ── KUNDLI FORM ── */
+.kundli-input-form {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 1.5rem 2rem;
+  margin: 1rem 2rem;
+}
+
+.kundli-input-form input,
+.kundli-input-form select {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  font-size: 13px;
+  font-family: var(--font-body);
+  color: var(--text);
+  outline: none;
+  transition: var(--transition);
+}
+
+.kundli-input-form input:focus,
+.kundli-input-form select:focus {
+  border-color: var(--border2);
+}
+
+/* ── WIKI TERMS ── */
+.wiki-card {
+  break-inside: avoid;
+}
+
+/* ── RESPONSIVE COLUMNS ── */
+@supports (columns: 2) {
+  #wiki-container {
+    columns: 2;
+    column-gap: 2rem;
+  }
+
+  @media (max-width: 768px) {
+    #wiki-container {
+      columns: 1;
+    }
+  }
+}
+
 /* ── RESPONSIVE ── */
 @media (max-width: 768px) {
   .nav-links { display: none; flex-direction: column; position: fixed; top: 58px; left: 0; right: 0; background: var(--bg2); border-bottom: 1px solid var(--border); padding: 8px; }
